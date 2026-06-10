@@ -2,10 +2,10 @@ const cols = [
   {
     title: "Product",
     links: [
-      { label: "How It Works", href: "/#how" },
+      { label: "How It Works", href: "/work" },
       { label: "For Owners", href: "/#owners" },
       { label: "For Seekers", href: "/#seekers" },
-      { label: "Pricing", href: "/#pricing" },
+      { label: "FAQ", href: "/#faq" },
     ],
   },
   {
@@ -49,7 +49,7 @@ export default function Footer() {
             </p>
             <a
               href="mailto:support@gharmitra.com"
-              className="mt-5 inline-block text-[15px] text-paper/80 underline-offset-4 hover:underline"
+              className="relative mt-5 inline-block text-[15px] text-paper/80 transition-colors after:pointer-events-none after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out hover:text-paper hover:after:scale-x-100"
             >
               support@gharmitra.com
             </a>
@@ -65,7 +65,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <a
                       href={l.href}
-                      className="text-[15px] text-paper/75 transition-colors hover:text-paper"
+                      className="relative inline-block text-[15px] text-paper/75 transition-colors after:pointer-events-none after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out hover:text-paper hover:after:scale-x-100"
                     >
                       {l.label}
                     </a>

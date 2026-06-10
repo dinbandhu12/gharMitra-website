@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "./Reveal";
 import Button from "./Button";
 
@@ -119,76 +121,17 @@ export function WhyGharMitra() {
 }
 
 /* ------------------------------ How it works ----------------------------- */
-
-const steps = [
-  {
-    k: "Step 1",
-    title: "Sign up in seconds.",
-    body: "Use your Google account or phone number — no paperwork, no waiting.",
-    img: "/website-img/step-1.png",
-  },
-  {
-    k: "Step 2",
-    title: "List or search.",
-    body: "Owners post their property with photos and video; seekers browse nearby homes.",
-    img: "/website-img/step-2.png",
-  },
-  {
-    k: "Step 3",
-    title: "Connect directly.",
-    body: "Tap to call or message the owner and take it forward — no broker in between.",
-    img: "/website-img/step-3.png",
-  },
-];
+/* The "Three simple steps" section was moved to the /work page. The homepage
+   keeps just this full-bleed image band. */
 
 export function HowItWorks() {
   return (
-    <>
-      <ImageBand
-        src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=2000&q=80"
-        alt="A welcoming family home"
-        heading="Real homes, real owners."
-        body="Every listing is verified with real photos, and you talk directly to the owner — no brokers in between, no middlemen, no surprises."
-      />
-
-      <section id="how" className="px-5 py-28 sm:px-8 sm:py-40">
-        <div className="mx-auto max-w-7xl">
-          <Reveal>
-            <Eyebrow>How it works</Eyebrow>
-            <h2 className="mt-6 max-w-3xl font-display text-[clamp(2.2rem,5vw,4rem)] font-light leading-[1.04] tracking-[-0.025em]">
-              Three simple steps.
-            </h2>
-          </Reveal>
-
-          <div className="mt-16 grid gap-y-14 md:grid-cols-3">
-            {steps.map((s, i) => (
-              <Reveal key={s.k} delay={i * 0.1} className="h-full">
-                <div className="flex h-full flex-col md:border-l md:border-line md:px-9 md:first:border-l-0 md:first:pl-0">
-                  <div className="aspect-[4/5] w-full overflow-hidden rounded-sm bg-paper-deep">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={s.img}
-                      alt={s.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <span className="mt-8 text-xs font-medium uppercase tracking-[0.2em] text-accent">
-                    {s.k}
-                  </span>
-                  <h3 className="mt-4 font-display text-2xl font-medium tracking-tight">
-                    {s.title}
-                  </h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-                    {s.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+    <ImageBand
+      src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=2000&q=80"
+      alt="A welcoming family home"
+      heading="Real homes, real owners."
+      body="Every listing is verified with real photos, and you talk directly to the owner — no brokers in between, no middlemen, no surprises."
+    />
   );
 }
 
@@ -293,99 +236,109 @@ export function BuiltForEveryone() {
   );
 }
 
-/* -------------------------------- Pricing -------------------------------- */
+/* --------------------------------- FAQ ----------------------------------- */
+/* Replaces the old Pricing section — we don't surface pricing on the first
+   impression. Answers stay general (no specific price numbers). */
 
-const plans = [
+const faqs = [
   {
-    k: "Launch month",
-    price: "Free",
-    note: "for everyone",
-    body: "List and connect at no cost for the first month while we grow.",
-    featured: true,
+    q: "What exactly does gharMitra do?",
+    a: "gharMitra is a no-broker app that connects home owners and seekers directly. Owners list a house, room, or flat with photos and video; seekers browse nearby homes and contact the owner with one tap.",
   },
   {
-    k: "Registration",
-    price: "₹499",
-    note: "one-time · owners",
-    body: "For owners to list properties. Seekers always browse free.",
-    featured: false,
+    q: "Is it really broker-free?",
+    a: "Yes. There's no agent in between — you talk straight to the owner and decide together. No brokerage, no markup, no middlemen.",
   },
   {
-    k: "Success fee",
-    price: "₹599",
-    note: "on close · owners",
-    body: "Charged only when your property is actually sold or rented. No sale, no fee.",
-    featured: false,
+    q: "How are listings verified?",
+    a: "Every listing carries real photos and up to three short videos, and owners verify their identity — so what you see on screen is what you find on the visit.",
+  },
+  {
+    q: "Do I have to pay to use it?",
+    a: "Browsing and contacting owners is always free for seekers. Owners pay only when a home is actually rented or sold — no deal, no fee.",
+  },
+  {
+    q: "Which areas does gharMitra cover?",
+    a: "gharMitra is local-first and works across small towns and big cities alike. Coverage grows every week as more owners list their homes.",
   },
 ];
 
-export function Pricing() {
+function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
+  const [open, setOpen] = useState(false);
   return (
-    <section id="pricing" className="bg-paper-deep px-5 py-28 sm:px-8 sm:py-40">
-      <div className="mx-auto grid max-w-7xl gap-x-16 gap-y-12 lg:grid-cols-[0.85fr_1.15fr]">
-        {/* Left: statement */}
-        <div>
-          <Reveal>
-            <Eyebrow>Pricing</Eyebrow>
-            <h2 className="mt-6 font-display text-[clamp(2.2rem,5vw,4rem)] font-light leading-[1.0] tracking-[-0.03em]">
-              Free to start.
-              <br />
-              Fair when it works.
-            </h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">
-              Downloading and browsing gharMitra is always free. Owners only pay
-              for the services that help close a deal.
+    <div className="border-b border-ink/15">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+      >
+        <span className="flex items-baseline gap-5">
+          <span className="font-display text-sm font-medium tabular-nums text-accent">
+            0{index + 1}
+          </span>
+          <span className="font-display text-[clamp(1.15rem,2.4vw,1.7rem)] font-medium tracking-tight">
+            {q}
+          </span>
+        </span>
+        <span
+          className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border border-ink/20 transition-all duration-300 ${
+            open ? "rotate-45 border-accent bg-accent text-white" : "text-ink"
+          }`}
+        >
+          <svg
+            viewBox="0 0 16 16"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          >
+            <path d="M8 3v10M3 8h10" />
+          </svg>
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="max-w-2xl pb-7 pl-10 text-[15px] leading-relaxed text-ink-soft">
+              {a}
             </p>
-            <p className="mt-8 max-w-md text-sm leading-relaxed text-ink-soft/80">
-              Pay by UPI, QR scan, cards, or netbanking — powered by Razorpay.
-              No hidden charges. Seekers never pay to search or contact an owner.
-            </p>
-          </Reveal>
-        </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
-        {/* Right: editorial price rows */}
-        <Reveal delay={0.08}>
-          <div className="border-t border-ink/15">
-            {plans.map((p) => (
-              <div
-                key={p.k}
-                className="group relative grid grid-cols-[1fr_auto] items-center gap-6 border-b border-ink/15 py-8"
-              >
-                <div>
-                  <div className="flex items-center gap-3">
-                    <p
-                      className={`text-xs font-medium uppercase tracking-[0.18em] ${
-                        p.featured ? "text-accent" : "text-ink-soft"
-                      }`}
-                    >
-                      {p.k}
-                    </p>
-                    {p.featured && (
-                      <span className="rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white">
-                        Now
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-ink-soft">
-                    {p.body}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p
-                    className={`font-display text-[clamp(2.2rem,5vw,3.5rem)] font-light leading-none tracking-tight transition-colors duration-300 ${
-                      p.featured ? "text-accent" : "text-ink"
-                    }`}
-                  >
-                    {p.price}
-                  </p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.14em] text-ink-soft">
-                    {p.note}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+export function Faq() {
+  return (
+    <section id="faq" className="bg-paper-deep px-5 py-28 sm:px-8 sm:py-40">
+      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.4fr_0.6fr] lg:items-start">
+        <Reveal>
+          <Eyebrow>Common questions</Eyebrow>
+          <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.4rem)] font-light leading-[1.05] tracking-[-0.025em]">
+            Questions,
+            <br />
+            answered.
+          </h2>
+          <p className="mt-6 max-w-sm text-lg leading-relaxed text-ink-soft">
+            Everything you might want to know before you list a home or start
+            your search.
+          </p>
         </Reveal>
+
+        <div>
+          {faqs.map((f, i) => (
+            <FaqItem key={f.q} q={f.q} a={f.a} index={i} />
+          ))}
+        </div>
       </div>
     </section>
   );

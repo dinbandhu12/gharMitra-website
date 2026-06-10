@@ -8,11 +8,10 @@ import Button from "./Button";
 import { getLenis } from "./lenisStore";
 import { usePageTransition } from "./TransitionProvider";
 
-// Real pages (About/Work/FAQ are built next — routes must exist before deploy)
+// Real page routes used in the nav.
 const links = [
   { label: "About", href: "/about" },
   { label: "Work", href: "/work" },
-  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -86,7 +85,7 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="relative z-50 mx-auto flex max-w-7xl items-center justify-between px-2 py-4">
+      <nav className="relative z-50 mx-auto flex max-w-7xl items-center justify-between px-4 md:px-2 py-4">
         <Link
           href="/"
           onClick={(e) => goTo(e, "/")}
@@ -112,7 +111,7 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
               <Link
                 href={l.href}
                 onClick={(e) => goTo(e, l.href)}
-                className={`text-[13px] uppercase tracking-[0.12em] transition-colors duration-300 ${
+                className={`relative inline-block text-[13px] uppercase tracking-[0.12em] transition-colors duration-300 after:pointer-events-none after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 ${
                   light
                     ? "text-white/70 hover:text-white"
                     : "text-ink-soft hover:text-ink"

@@ -4,7 +4,7 @@ import {
   WhyGharMitra,
   HowItWorks,
   BuiltForEveryone,
-  Pricing,
+  Faq,
   FinalCTA,
 } from "@/components/Sections";
 import Footer from "@/components/Footer";
@@ -18,7 +18,7 @@ export default function Home() {
         <WhyGharMitra />
         <HowItWorks />
         <BuiltForEveryone />
-        <Pricing />
+        <Faq />
         <FinalCTA />
       </main>
       <Footer />

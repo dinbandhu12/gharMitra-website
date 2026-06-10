@@ -67,7 +67,7 @@ function AboutHero() {
   return (
     <section
       ref={root}
-      className="relative h-[90svh] md:h-[100svh] min-h-[640px] w-full overflow-hidden"
+      className="relative h-[100svh] min-h-[640px] w-full overflow-hidden"
     >
       <div className="absolute inset-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -80,7 +80,7 @@ function AboutHero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/5 to-black/65" />
       </div>
 
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center md:justify-end px-5 md:pb-16 ">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-16 ">
         <p
           data-fade
           className="mb-4 text-[11px] font-medium uppercase tracking-[0.3em] text-white/70"
@@ -188,7 +188,7 @@ function Vision() {
               src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=2000&q=80"
               alt="A bright, lived-in living room"
               loading="lazy"
-              className="h-[130%] w-full object-cover"
+              className="h-[100%] md:h-[130%] w-full object-cover"
             />
           </div>
         </Reveal>
@@ -254,7 +254,7 @@ function ScrollOverlay() {
     <section ref={root} aria-label="What drives us">
       <div
         ref={panel}
-        className="relative h-[90svh] md:h-[100svh] min-h-[600px] overflow-hidden bg-night"
+        className="relative h-[100svh] min-h-[600px] overflow-hidden bg-night"
       >
         {/* revealed photograph */}
         <div className="absolute inset-0">
@@ -400,7 +400,7 @@ function QuoteBand() {
                 src="/website-img/temp-img.png"
                 alt="Portrait of the founder"
                 loading="lazy"
-                className="mx-auto h-90 md:h-80 w-full object-contain object-bottom"
+                className="mx-auto h-100 md:h-80 w-full object-contain object-bottom"
               />
             </div>
           </Reveal>
@@ -721,10 +721,10 @@ const ctaCards = [
     cta: "Find a home",
   },
   {
-    k: "Pricing",
-    body: "Free to browse. Fair, transparent fees for owners — only when it works.",
-    href: "/#pricing",
-    cta: "See pricing",
+    k: "Common questions",
+    body: "Browsing is free, listings are verified, and there's no broker in between. The details, answered.",
+    href: "/#faq",
+    cta: "Read the FAQ",
   },
 ];
 

@@ -22,7 +22,7 @@ const TransitionCtx = createContext<{ navigate: (href: string) => void }>({
 export const usePageTransition = () => useContext(TransitionCtx);
 
 const EASE = [0.76, 0, 0.24, 1] as const;
-const DUR = 0.8;
+const DUR = 0.55;
 
 /**
  * Page transition — "left-to-right wipe": a dark panel (with the brand mark)
@@ -89,22 +89,22 @@ export default function TransitionProvider({
             }}
           >
             <motion.div
-              className="flex items-center gap-2.5"
-              initial={{ opacity: 0, x: -16 }}
+              className="flex flex-col items-center gap-3"
+              initial={{ opacity: 0, scale: 0.88 }}
               animate={{
                 opacity: phase === "cover" ? 1 : 0,
-                x: phase === "cover" ? 0 : -16,
+                scale: phase === "cover" ? 1 : 0.88,
               }}
               transition={{
-                duration: 0.3,
-                delay: phase === "cover" ? 0.28 : 0,
+                duration: 0.22,
+                delay: phase === "cover" ? 0.16 : 0,
                 ease: "easeOut",
               }}
             >
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent font-display text-lg leading-none text-white">
+              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent font-display text-3xl leading-none text-white">
                 g
               </span>
-              <span className="font-display text-2xl font-medium tracking-tight text-paper">
+              <span className="font-display text-lg font-medium tracking-[0.04em] text-paper/90">
                 gharMitra
               </span>
             </motion.div>

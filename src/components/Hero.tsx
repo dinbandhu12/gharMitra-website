@@ -103,7 +103,7 @@ export default function Hero() {
             <Button href="#download" variant="light">
               Download the App
             </Button>
-            <Button href="#how" variant="outlineLight">
+            <Button href="/work" variant="outlineLight">
               See How It Works
             </Button>
           </div>

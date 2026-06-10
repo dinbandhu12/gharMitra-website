@@ -142,7 +142,10 @@ export default function ContactPage() {
                       type="submit"
                       className="group relative inline-flex items-center gap-2 overflow-hidden rounded-md bg-accent px-7 py-3.5 text-[13px] font-medium uppercase tracking-[0.1em] text-white transition-colors duration-500 hover:text-white"
                     >
-                      <span className="pointer-events-none absolute inset-0 translate-y-full bg-ink transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0" />
+                      {/* fill panel wipes left→right on hover */}
+                      <span className="pointer-events-none absolute inset-0 -translate-x-full bg-ink transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-0" />
+                      {/* PREVIOUS: bottom→top wipe — kept for reference */}
+                      {/* <span className="pointer-events-none absolute inset-0 translate-y-full bg-ink transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0" /> */}
                       <span className="relative z-10">Send message</span>
                       <svg
                         aria-hidden

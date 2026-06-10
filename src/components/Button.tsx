@@ -75,11 +75,16 @@ export default function Button({
     <span
       className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-sm font-medium uppercase tracking-[0.1em] transition-colors duration-500 ${sizing} ${v.base} ${v.hoverText} ${className}`}
     >
-      {/* fill panel that wipes up on hover */}
+      {/* fill panel that wipes left→right on hover */}
       <span
         aria-hidden
-        className={`pointer-events-none absolute inset-0 translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 ${v.fill}`}
+        className={`pointer-events-none absolute inset-0 -translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-0 ${v.fill}`}
       />
+      {/* PREVIOUS: fill panel that wipes up (bottom→top) on hover — kept for reference */}
+      {/* <span
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 ${v.fill}`}
+      /> */}
       <span className="relative z-10">{children}</span>
       {arrow && (
         <svg
