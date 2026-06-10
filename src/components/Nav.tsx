@@ -2,15 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "./Button";
 import { getLenis } from "./lenisStore";
+import { usePageTransition } from "./TransitionProvider";
 
+// Real pages (About/Work/FAQ are built next — routes must exist before deploy)
 const links = [
-  { label: "How It Works", href: "/#how" },
-  { label: "For Owners", href: "/#owners" },
-  { label: "For Seekers", href: "/#seekers" },
-  { label: "Pricing", href: "/#pricing" },
+  { label: "About", href: "/about" },
+  { label: "Work", href: "/work" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -21,6 +23,18 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const lastY = useRef(0);
+  const pathname = usePathname();
+  const { navigate } = usePageTransition();
+
+  // Route the full-page nav links through the page-transition curtain. Hash
+  // links (e.g. "/#download") are left to SmoothScroll; clicking the page
+  // you're already on does nothing (avoids a pointless wipe).
+  const goTo = (e: React.MouseEvent, href: string) => {
+    setOpen(false);
+    if (href.includes("#") || !href.startsWith("/")) return;
+    e.preventDefault();
+    if (href !== pathname) navigate(href);
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -72,10 +86,10 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="relative z-50 mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+      <nav className="relative z-50 mx-auto flex max-w-7xl items-center justify-between px-2 py-4">
         <Link
           href="/"
-          onClick={() => setOpen(false)}
+          onClick={(e) => goTo(e, "/")}
           className="flex items-center gap-2"
         >
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg leading-none text-white">
@@ -90,12 +104,14 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
           </span>
         </Link>
 
-        {/* Desktop links */}
+        {/* Right cluster: links + CTA (desktop), hamburger (mobile) */}
+        <div className="flex items-center gap-9">
         <ul className="hidden items-center gap-9 md:flex">
           {links.map((l) => (
             <li key={l.href}>
               <Link
                 href={l.href}
+                onClick={(e) => goTo(e, l.href)}
                 className={`text-[13px] uppercase tracking-[0.12em] transition-colors duration-300 ${
                   light
                     ? "text-white/70 hover:text-white"
@@ -153,6 +169,7 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
             )}
           </svg>
         </button>
+        </div>
       </nav>
     </header>
 
@@ -200,7 +217,7 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
                   >
                     <Link
                       href={l.href}
-                      onClick={() => setOpen(false)}
+                      onClick={(e) => goTo(e, l.href)}
                       className="group flex items-center justify-between py-4 active:text-accent"
                     >
                       <span className="flex items-baseline gap-4">

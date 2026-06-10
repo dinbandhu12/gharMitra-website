@@ -22,13 +22,15 @@ const TransitionCtx = createContext<{ navigate: (href: string) => void }>({
 export const usePageTransition = () => useContext(TransitionCtx);
 
 const EASE = [0.76, 0, 0.24, 1] as const;
-const DUR = 0.7;
+const DUR = 0.8;
 
 /**
- * Page transition — "curtain": a dark panel slides up to cover the screen
- * (brand mark shows), we navigate while covered + reset scroll to top, then the
- * panel slides off the top to reveal the new page. The overlay is the only
- * extra DOM — children render directly so layout/scroll are untouched.
+ * Page transition — "left-to-right wipe": a dark panel (with the brand mark)
+ * sweeps in from the left to fully cover the screen. We navigate while covered +
+ * reset scroll to top, then the panel continues sweeping off to the right,
+ * revealing the new page from the left. Both phases travel left→right for a
+ * clear, noticeable swipe. The panel's onAnimationComplete drives the
+ * navigation/reset between phases.
  */
 export default function TransitionProvider({
   children,
@@ -74,8 +76,8 @@ export default function TransitionProvider({
             key="curtain"
             aria-hidden
             className="pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-night"
-            initial={{ y: "100%" }}
-            animate={{ y: phase === "reveal" ? "-100%" : "0%" }}
+            initial={{ x: "-100%" }}
+            animate={{ x: phase === "reveal" ? "100%" : "0%" }}
             transition={{ duration: DUR, ease: EASE }}
             onAnimationComplete={() => {
               if (phase === "cover") {
@@ -88,14 +90,14 @@ export default function TransitionProvider({
           >
             <motion.div
               className="flex items-center gap-2.5"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, x: -16 }}
               animate={{
                 opacity: phase === "cover" ? 1 : 0,
-                y: phase === "cover" ? 0 : 10,
+                x: phase === "cover" ? 0 : -16,
               }}
               transition={{
                 duration: 0.3,
-                delay: phase === "cover" ? 0.22 : 0,
+                delay: phase === "cover" ? 0.28 : 0,
                 ease: "easeOut",
               }}
             >

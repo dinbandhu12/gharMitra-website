@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk, Inter } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import TransitionProvider from "@/components/TransitionProvider";
 
-// Display: a clean, neutral grotesque — the "awarded / Swiss" feel.
-const display = Hanken_Grotesk({
+// Display / headings (h1–h4): Geist — a clean, modern variable grotesque.
+const display = Geist({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
