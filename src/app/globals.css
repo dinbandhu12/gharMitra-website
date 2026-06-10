@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   gharMitra — marketing site design tokens
+   Warm, editorial, premium. Calm neutral base + one warm accent.
+----------------------------------------------------------------- */
+@theme inline {
+  /* Surfaces */
+  /* --color-paper: #f7f4ef; */ /* warm off-white page base (previous) */
+  --color-paper: #f9f9f9; /* page base */
+  /* --color-paper-deep: #efe9e0; */ /* warm beige section (previous) */
+  --color-paper-deep: #efefee; /* slightly deeper section, neutral to match #f9f9f9 */
+  --color-card: #ffffff;
+  --color-ink: #1c1815; /* near-black warm ink */
+  --color-ink-soft: #5c544c; /* secondary text */
+  --color-line: #e4ddd2; /* hairline borders */
+
+  /* Brand accent */
+  /* --color-accent: #d75a35; */ /* warm terracotta (previous) */
+  /* --color-accent-deep: #b6431f; */ /* (previous) */
+  /* --color-accent-soft: #f4d9cd; */ /* (previous) */
+  /* --color-accent: #1f7a63; */ /* deep emerald green (previous) */
+  /* --color-accent-deep: #155c4a; */ /* (previous) */
+  /* --color-accent-soft: #d4e9e2; */ /* (previous) */
+  --color-accent: #1c8198; /* teal */
+  --color-accent-deep: #146376;
+  --color-accent-soft: #d2e8ed;
+
+  /* Ink-on-dark band */
+  --color-night: #1c1815;
+
+  /* Fonts (provided by next/font in layout) */
+  --font-display: var(--font-display);
+  --font-sans: var(--font-inter);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Lenis smooth-scroll baseline */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Reveal masks: hide pre-animation content (no flash before JS) */
+.reveal-mask {
+  overflow: hidden;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
