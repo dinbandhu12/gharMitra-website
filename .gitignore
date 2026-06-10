@@ -35,6 +35,9 @@ desktop.ini
 CLAUDE.md
 .claude/
 
+# personal scratch notes
+tomorrow-work.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*

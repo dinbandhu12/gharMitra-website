@@ -146,8 +146,9 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
               </>
             ) : (
               <>
-                <line x1="3" y1="8" x2="21" y2="8" />
-                <line x1="3" y1="16" x2="21" y2="16" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
               </>
             )}
           </svg>
@@ -162,39 +163,89 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
         {open && (
           <motion.div
             key="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-40 bg-paper md:hidden"
           >
-            <div className="flex h-[100svh] flex-col px-5 pb-10 pt-24 sm:px-8">
+            {/* soft accent glow, echoes the FinalCTA treatment */}
+            <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-accent-soft/70 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-32 -left-24 h-72 w-72 rounded-full border border-ink/10" />
+
+            <div className="relative flex h-[100svh] flex-col px-5 pb-8 pt-24 sm:px-8">
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-accent"
+              >
+                Menu
+              </motion.p>
+
               <ul className="flex flex-col">
                 {links.map((l, i) => (
                   <motion.li
                     key={l.href}
-                    initial={{ opacity: 0, y: 14 }}
+                    initial={{ opacity: 0, y: 26 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08 + i * 0.05, duration: 0.4 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{
+                      delay: 0.22 + i * 0.06,
+                      duration: 0.5,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
                     className="border-b border-line"
                   >
                     <Link
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="block py-4 font-display text-3xl font-medium tracking-tight text-ink"
+                      className="group flex items-center justify-between py-4 active:text-accent"
                     >
-                      {l.label}
+                      <span className="flex items-baseline gap-4">
+                        <span className="font-display text-xs font-medium tabular-nums text-accent">
+                          0{i + 1}
+                        </span>
+                        <span className="font-display text-[2rem] font-medium tracking-tight text-ink transition-colors duration-200 group-active:text-accent">
+                          {l.label}
+                        </span>
+                      </span>
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 16 16"
+                        className="h-4 w-4 text-ink-soft/60 transition-transform duration-300 group-active:translate-x-0.5 group-active:text-accent"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M4 12 12 4M6 4h6v6" />
+                      </svg>
                     </Link>
                   </motion.li>
                 ))}
               </ul>
 
               <motion.div
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 + links.length * 0.05, duration: 0.4 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.22 + links.length * 0.06, duration: 0.45 }}
                 className="mt-auto"
               >
+                <div className="mb-5 flex items-center justify-between text-[13px] text-ink-soft">
+                  <a
+                    href="mailto:support@gharmitra.com"
+                    className="underline-offset-4 active:text-accent"
+                  >
+                    support@gharmitra.com
+                  </a>
+                  <a href="tel:+919876543210" className="active:text-accent">
+                    +91 98765 43210
+                  </a>
+                </div>
                 <Link
                   href="/#download"
                   onClick={() => setOpen(false)}
