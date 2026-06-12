@@ -111,7 +111,7 @@ function AboutHero() {
           className="mt-5 max-w-md text-md md:text-sm leading-relaxed text-white/75"
         >
           Finding or listing a home should be honest, direct, and simple enough
-          for anyone — no middlemen, no markups, no confusion.
+          for anyone no middlemen, no markups, no confusion.
         </p>
       </div>
     </section>
@@ -150,9 +150,9 @@ function Vision() {
   return (
     <section
       ref={root}
-      className="overflow-hidden px-5 py-28 sm:px-8 sm:py-36"
+      className="overflow-hidden pt-28 sm:pt-36"
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end">
           <Reveal>
             <Eyebrow>Our vision</Eyebrow>
@@ -170,29 +170,29 @@ function Vision() {
               spare room as easily as a landlord in a metro, and where a young
               worker can find a place near work without paying a month&apos;s
               rent to a broker. By putting owners and seekers in direct contact,
-              we&apos;re unlocking trust — and giving everyone a fair shot at a
+              we&apos;re unlocking trust and giving everyone a fair shot at a
               place to call home.
             </p>
           </Reveal>
         </div>
-
-        {/* Wide parallax image */}
-        <Reveal y={40}>
-          <div
-            data-parallax-wrap
-            className="relative mt-16 h-[78vh] min-h-[640px] w-full overflow-hidden rounded-[4px] bg-paper-deep sm:mt-20"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              data-parallax
-              src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=2000&q=80"
-              alt="A bright, lived-in living room"
-              loading="lazy"
-              className="h-[100%] md:h-[130%] w-full object-cover"
-            />
-          </div>
-        </Reveal>
       </div>
+
+      {/* Wide parallax image — full bleed */}
+      <Reveal y={40}>
+        <div
+          data-parallax-wrap
+          className="relative mt-16 h-[78vh] min-h-[640px] w-full overflow-hidden bg-paper-deep sm:mt-20"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            data-parallax
+            src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=2000&q=80"
+            alt="A bright, lived-in living room"
+            loading="lazy"
+            className="h-[100%] md:h-[130%] w-full object-cover"
+          />
+        </div>
+      </Reveal>
     </section>
   );
 }
@@ -285,7 +285,7 @@ function ScrollOverlay() {
           </h2>
           <p className="mt-9 max-w-lg text-lg leading-relaxed text-white/70">
             Brokers add cost and confusion to something that should be human.
-            gharMitra removes the layer in between — so the conversation about
+            gharMitra removes the layer in between so the conversation about
             your home happens directly, on fair terms.
           </p>
         </div>
@@ -309,7 +309,7 @@ const pillars = [
   },
   {
     title: "Local at heart",
-    body: "Built for small towns and big cities alike — wherever you live, your next home is close by.",
+    body: "Built for small towns and big cities alike wherever you live, your next home is close by.",
     img: "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1000&q=80",
   },
 ];
@@ -433,7 +433,7 @@ function Story() {
             <div className="mt-12 grid gap-10 sm:grid-cols-2">
               <Reveal delay={0.05}>
                 <p className="text-[15px] leading-relaxed text-ink-soft">
-                  gharMitra began as a small experiment in one neighbourhood —
+                  gharMitra began as a small experiment in one neighbourhood
                   a handful of verified listings and a promise that the owner
                   was one tap away. Word spread quickly, because the idea was
                   obvious the moment people used it.
@@ -443,7 +443,7 @@ function Story() {
                 <p className="text-[15px] leading-relaxed text-ink-soft">
                   Today we&apos;re a small team obsessed with making the
                   experience feel effortless for first-time renters and elderly
-                  owners alike — building tools in regional languages, with real
+                  owners alike building tools in regional languages, with real
                   prices, real photos, and zero middlemen.
                 </p>
               </Reveal>
@@ -493,7 +493,7 @@ function Team() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-xl text-lg leading-relaxed text-ink-soft">
-              A small, focused team that genuinely answers — building gharMitra
+              A small, focused team that genuinely answers building gharMitra
               for every town and city, one honest listing at a time.
             </p>
           </Reveal>
@@ -612,7 +612,7 @@ const faqs = [
   },
   {
     q: "Is it really broker-free?",
-    a: "Yes. There is no agent in between. You talk straight to the owner and decide together — no brokerage, no markup, no surprise fees.",
+    a: "Yes. There is no agent in between. You talk straight to the owner and decide together no brokerage, no markup, no surprise fees.",
   },
   {
     q: "How are listings verified?",
@@ -620,7 +620,7 @@ const faqs = [
   },
   {
     q: "What does it cost?",
-    a: "Browsing and contacting owners is always free for seekers. Owners pay a small registration fee and a success fee only when a property is actually rented or sold — no deal, no fee.",
+    a: "Browsing and contacting owners is always free for seekers. Owners pay a small registration fee and a success fee only when a property is actually rented or sold no deal, no fee.",
   },
   {
     q: "Which areas do you cover?",
@@ -797,7 +797,7 @@ function AboutCTA() {
                 Let&apos;s make finding a home simple.
               </h2>
               <p className="mt-7 max-w-md text-lg leading-relaxed text-ink/70">
-                Download gharMitra and start in minutes — list a property or
+                Download gharMitra and start in minutes list a property or
                 find one, with no brokers in between.
               </p>
 

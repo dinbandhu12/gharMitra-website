@@ -101,12 +101,12 @@ export default function TransitionProvider({
                 ease: "easeOut",
               }}
             >
-              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent font-display text-3xl leading-none text-white">
-                g
-              </span>
-              <span className="font-display text-lg font-medium tracking-[0.04em] text-paper/90">
-                gharMitra
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/website-img/logo-v2.png"
+                alt="gharMitra"
+                className="h-12 w-auto"
+              />
             </motion.div>
           </motion.div>
         )}

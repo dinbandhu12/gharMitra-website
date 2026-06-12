@@ -89,18 +89,28 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
         <Link
           href="/"
           onClick={(e) => goTo(e, "/")}
-          className="flex items-center gap-2"
+          aria-label="gharMitra — home"
+          className="relative flex items-center"
         >
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg leading-none text-white">
-            g
-          </span>
-          <span
-            className={`font-display text-xl font-medium tracking-tight transition-colors duration-300 ${
-              light ? "text-white" : "text-ink"
+          {/* Two wordmarks crossfade as the nav switches treatment: dark (v1)
+              on the paper bar, white (v2) over the dark hero. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/website-img/logo-v1.png"
+            alt="gharMitra"
+            className={`h-8 w-auto transition-opacity duration-300 ${
+              light ? "opacity-0" : "opacity-100"
             }`}
-          >
-            gharMitra
-          </span>
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/website-img/logo-v2.png"
+            alt=""
+            aria-hidden
+            className={`absolute left-0 top-1/2 h-8 w-auto -translate-y-1/2 transition-opacity duration-300 ${
+              light ? "opacity-100" : "opacity-0"
+            }`}
+          />
         </Link>
 
         {/* Right cluster: links + CTA (desktop), hamburger (mobile) */}

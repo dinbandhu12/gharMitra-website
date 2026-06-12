@@ -1,3 +1,8 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { usePageTransition } from "./TransitionProvider";
+
 const cols = [
   {
     title: "Product",
@@ -26,6 +31,18 @@ const cols = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const { navigate } = usePageTransition();
+
+  // Route full-page links through the transition curtain (like the nav). Hash
+  // links (e.g. "/#faq"), bare "#" placeholders, and mailto/external are left to
+  // the browser; clicking the page you're already on does nothing.
+  const goTo = (e: React.MouseEvent, href: string) => {
+    if (href.includes("#") || !href.startsWith("/")) return;
+    e.preventDefault();
+    if (href !== pathname) navigate(href);
+  };
+
   return (
     <footer id="help" className="bg-night px-5 pt-24 pb-10 text-paper sm:px-8">
       <div className="mx-auto max-w-7xl">
@@ -35,17 +52,17 @@ export default function Footer() {
 
         <div className="mt-20 grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg leading-none text-white">
-                g
-              </span>
-              <span className="font-display text-xl tracking-tight">
-                gharMitra
-              </span>
+            <div className="flex items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/website-img/logo-v2.png"
+                alt="gharMitra"
+                className="h-8 w-auto"
+              />
             </div>
             <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-paper/60">
               Built for everyone, including first-time and elderly users. Find a
-              home, or list yours — simply.
+              home, or list yours simply.
             </p>
             <a
               href="mailto:support@gharmitra.com"
@@ -65,6 +82,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <a
                       href={l.href}
+                      onClick={(e) => goTo(e, l.href)}
                       className="relative inline-block text-[15px] text-paper/75 transition-colors after:pointer-events-none after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out hover:text-paper hover:after:scale-x-100"
                     >
                       {l.label}

@@ -46,11 +46,15 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;
-  overflow-x: hidden;
+  /* `clip`, not `hidden`: both stop horizontal overflow, but `hidden` turns the
+     element into a scroll container, which breaks `position: sticky` for
+     descendants (they stick to the body scrollport, not the viewport, so they
+     just scroll away). `clip` avoids that. See Work.tsx "What powers it". */
+  overflow-x: clip;
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Lenis smooth-scroll baseline */

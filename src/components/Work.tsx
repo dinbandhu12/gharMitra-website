@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Reveal from "./Reveal";
@@ -84,13 +84,13 @@ function WorkHero() {
         <div className="mt-8 sm:mt-auto sm:flex sm:justify-end sm:pt-20">
           <div className="grid max-w-2xl gap-x-10 gap-y-6 text-[15px] leading-relaxed text-white/75 sm:grid-cols-2">
             <p data-fade>
-              gharMitra connects home owners and seekers directly — verified
+              gharMitra connects home owners and seekers directly verified
               listings, real photos and video, and one-tap contact, with no
               broker in between.
             </p>
             <p data-fade>
               Here&apos;s the whole platform, end to end: how you list, how you
-              search, and how you connect — built to stay simple for everyone.
+              search, and how you connect built to stay simple for everyone.
             </p>
           </div>
         </div>
@@ -104,7 +104,7 @@ function WorkHero() {
 const capabilities = [
   {
     title: "Verified, visual listings",
-    body: "Real photos and up to three short video walkthroughs on every home — so what you see on screen is exactly what you visit.",
+    body: "Real photos and up to three short video walkthroughs on every home so what you see on screen is exactly what you visit.",
     img: "/website-img/img-1.avif",
   },
   {
@@ -135,36 +135,6 @@ function CapImg({
   );
 }
 
-/* Glassmorphism card (bottom-left) showing the active capability. */
-function CapCard({
-  index,
-  title,
-  body,
-  className = "",
-}: {
-  index: number;
-  title: string;
-  body: string;
-  className?: string;
-}) {
-  return (
-    <div
-      data-cap-card
-      className={`group rounded-md border border-white/25 bg-white/10 p-6 text-white backdrop-blur-md transition-colors duration-300 hover:border-white/40 hover:bg-white/[0.18] sm:p-8 ${className}`}
-    >
-      <span className="font-display text-sm font-medium tabular-nums text-white/80">
-        0{index + 1}
-      </span>
-      <h3 className="mt-6 font-display text-2xl font-medium tracking-tight transition-colors duration-300 group-hover:text-white">
-        {title}
-      </h3>
-      <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-white/70 transition-colors duration-300 group-hover:text-white/90">
-        {body}
-      </p>
-    </div>
-  );
-}
-
 const capHeading = (
   <Reveal>
     <Eyebrow>What powers it</Eyebrow>
@@ -176,125 +146,145 @@ const capHeading = (
   </Reveal>
 );
 
-/* Scroll-reveal showcase: the image + bottom-left glass card cross-fade through
-   all three capabilities (01 → 02 → 03) while the panel is pinned. The card
-   text rises in on each step; the visible card also lifts on hover. */
+/* Showcase: on desktop the image column is `position: sticky` and stays in view
+   while the three blurbs scroll past on the right; an IntersectionObserver swaps
+   the pinned image (01 → 02 → 03) as each blurb reaches the centre of the
+   viewport. On mobile (where a side-by-side sticky makes no sense) it falls back
+   to a clean image-then-text stack. No GSAP pinning / ScrollTrigger, so there's
+   nothing for Lenis or mobile browser-chrome resize to break. */
 function Capabilities() {
-  const root = useRef<HTMLDivElement>(null);
-  const pin = useRef<HTMLDivElement>(null);
-  const [reduced, setReduced] = useState(false);
+  const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReduced) {
-      // Client-only media query; updating after mount avoids an SSR mismatch.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setReduced(true);
-      return;
-    }
-
+    if (!root.current) return;
     gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      const imgs = gsap.utils.toArray<HTMLElement>("[data-cap-img]");
-      const cards = gsap.utils.toArray<HTMLElement>("[data-cap-card]");
 
-      // Only the first image/card start visible.
-      gsap.set(imgs, { opacity: 0 });
-      gsap.set(imgs[0], { opacity: 1 });
-      gsap.set(cards, { autoAlpha: 0, y: 28 });
-      gsap.set(cards[0], { autoAlpha: 1, y: 0 });
+    // gsap.matchMedia only runs this on desktop (where the pinned row exists)
+    // and auto-reverts on resize below lg, so the mobile stack is untouched.
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 1024px)", () => {
+      const scope = root.current!;
+      const track = scope.querySelector<HTMLElement>("[data-track]");
+      const imgs = gsap.utils.toArray<HTMLElement>("[data-show-img]", scope);
+      const panels = gsap.utils.toArray<HTMLElement>("[data-show-panel]", scope);
+      if (!track || imgs.length === 0) return;
 
+      gsap.set([...imgs, ...panels], { opacity: 0 });
+      gsap.set([imgs[0], panels[0]], { opacity: 1 });
+
+      // Scroll-LINKED crossfade: `scrub` ties progress to the scroll position so
+      // the fade tracks the user's scroll instead of snapping. Pinning is still
+      // CSS `position: sticky` (no GSAP pin → nothing to jank on mobile).
       const tl = gsap.timeline({
+        defaults: { ease: "none" },
         scrollTrigger: {
-          trigger: pin.current,
+          trigger: track,
           start: "top top",
-          end: "+=220%",
-          scrub: 0.5,
-          pin: true,
-          anticipatePin: 1,
+          end: "bottom bottom",
+          scrub: 0.6,
         },
       });
 
+      const HOLD = 1; // scroll spent holding a step
+      const FADE = 0.7; // scroll spent crossfading between steps
       for (let i = 1; i < imgs.length; i++) {
-        const at = i - 1; // 0, then 1
-        tl.to(imgs[i - 1], { opacity: 0, duration: 0.5 }, at)
-          .to(cards[i - 1], { autoAlpha: 0, y: -28, duration: 0.4 }, at)
-          .to(imgs[i], { opacity: 1, duration: 0.5 }, at + 0.1)
-          .fromTo(
-            cards[i],
-            { autoAlpha: 0, y: 28 },
-            { autoAlpha: 1, y: 0, duration: 0.5 },
-            at + 0.25
-          );
+        tl.to([imgs[i - 1], panels[i - 1]], { opacity: 0, duration: FADE }, `+=${HOLD}`)
+          .to([imgs[i], panels[i]], { opacity: 1, duration: FADE }, "<");
       }
-    }, root);
+      tl.to({}, { duration: HOLD }); // hold the final step before unpinning
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
-  // Reduced motion / no-JS-friendly fallback: a simple stacked list.
-  if (reduced) {
-    return (
-      <section className="px-5 py-28 sm:px-8 sm:py-36">
-        <div className="mx-auto max-w-7xl">
-          {capHeading}
-          <div className="mt-16 space-y-12">
-            {capabilities.map((c, i) => (
-              <div
-                key={c.title}
-                className="relative aspect-[16/10] w-full overflow-hidden rounded-[4px] bg-paper-deep"
-              >
-                <CapImg
+  return (
+    <section ref={root} className="bg-paper">
+      <div className="mx-auto max-w-7xl px-5 pt-20 sm:px-8 sm:pt-28">
+        {capHeading}
+      </div>
+
+      {/* Desktop: a pinned 50/50 row (image | dark panel) held by CSS sticky.
+          GSAP scrubs the crossfade of both the image and the panel's number/
+          title/body as the track scrolls past — smooth and scroll-linked. */}
+      <div
+        data-track
+        className="relative mt-12 hidden lg:block"
+        style={{ height: `${capabilities.length * 100}vh` }}
+      >
+        <div className="sticky top-0 h-screen">
+          <div className="grid h-full w-full grid-cols-2">
+            {/* Left — image */}
+            <div className="relative h-full overflow-hidden bg-paper-deep">
+              {capabilities.map((c, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={c.title}
+                  data-show-img
                   src={c.img}
                   alt={c.title}
-                  className="h-full w-full object-cover"
+                  loading="lazy"
+                  className={`absolute inset-0 h-full w-full object-cover ${
+                    i === 0 ? "opacity-100" : "opacity-0"
+                  }`}
                 />
-                <CapCard
-                  index={i}
-                  title={c.title}
-                  body={c.body}
-                  className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-auto sm:w-[26rem]"
-                />
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Right — brand-teal panel (distinct from the near-black KeyStats
+                section below); number top-left, title + body bottom-left */}
+            <div className="relative h-full bg-accent-deep text-paper">
+              {capabilities.map((c, i) => (
+                <div
+                  key={c.title}
+                  data-show-panel
+                  className={`pointer-events-none absolute inset-0 flex flex-col justify-between p-12 xl:p-20 ${
+                    i === 0 ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <span className="font-display text-xl font-light tabular-nums text-paper/55">
+                    0{i + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-[clamp(1.8rem,2.6vw,2.8rem)] font-medium leading-[1.1] tracking-tight text-paper">
+                      {c.title}
+                    </h3>
+                    <p className="mt-4 max-w-md text-[15px] leading-relaxed text-paper/65">
+                      {c.body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
-    );
-  }
+      </div>
 
-  return (
-    <section ref={root} className="px-5 py-20 sm:px-8 sm:py-28">
-      <div className="mx-auto max-w-7xl">
-        {capHeading}
-
-        {/* Only the (tall) image is pinned — the heading scrolls above it, so
-            the image gets nearly the full viewport height. */}
-        <div
-          ref={pin}
-          className="relative mt-10 h-[88svh] min-h-[460px] w-full overflow-hidden rounded-[4px] bg-paper-deep"
-        >
-          {/* Stacked images — cross-faded by scroll */}
-          {capabilities.map((c) => (
-            <CapImg
-              key={c.title}
-              src={c.img}
-              alt={c.title}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          ))}
-
-          {/* Stacked glass cards (bottom-left) — only one visible at a time */}
+      {/* Mobile / tablet: flush image + dark panel, stacked. */}
+      <div className="mt-12 px-5 sm:px-8 lg:hidden">
+        <div className="space-y-12">
           {capabilities.map((c, i) => (
-            <CapCard
-              key={c.title}
-              index={i}
-              title={c.title}
-              body={c.body}
-              className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-auto sm:w-[26rem]"
-            />
+            <Reveal key={c.title} delay={0.05}>
+              <div className="overflow-hidden">
+                <div className="relative aspect-[4/3] w-full bg-paper-deep">
+                  <CapImg
+                    src={c.img}
+                    alt={c.title}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="bg-accent-deep p-7 text-paper">
+                  <span className="font-display text-lg font-light tabular-nums text-paper/55">
+                    0{i + 1}
+                  </span>
+                  <h3 className="mt-6 font-display text-2xl font-medium leading-[1.1] tracking-tight">
+                    {c.title}
+                  </h3>
+                  <p className="mt-3 max-w-md text-[15px] leading-relaxed text-paper/65">
+                    {c.body}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -361,7 +351,7 @@ const steps = [
   {
     k: "Step 1",
     title: "Sign up in seconds.",
-    body: "Use your Google account or phone number — no paperwork, no waiting.",
+    body: "Use your Google account or phone number - no paperwork, no waiting.",
     img: "/website-img/step-1.png",
   },
   {
@@ -373,7 +363,7 @@ const steps = [
   {
     k: "Step 3",
     title: "Connect directly.",
-    body: "Tap to call or message the owner and take it forward — no broker in between.",
+    body: "Tap to call or message the owner and take it forward - no broker in between.",
     img: "/website-img/step-3.png",
   },
 ];
@@ -513,7 +503,7 @@ function BandAndTimeline() {
                 Built to scale, made to stay simple.
               </h3>
               <p className="mt-3 text-[15px] leading-relaxed text-white/80">
-                Every town we add works the same way — list, browse, connect.
+                Every town we add works the same way list, browse, connect.
                 No new rules to learn, wherever you live.
               </p>
             </div>
@@ -527,13 +517,13 @@ function BandAndTimeline() {
           <Reveal>
             <Eyebrow>Where we&apos;re headed</Eyebrow>
             <h2 className="mt-6 max-w-3xl font-display text-[clamp(2rem,4.5vw,3.4rem)] font-light leading-[1.05] tracking-[-0.025em]">
-              New here — and moving
+              New here and moving
               <br />
               fast on purpose.
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
               gharMitra is young, and that&apos;s the advantage. No legacy, no
-              broker incentives to protect — just a clean platform built for how
+              broker incentives to protect just a clean platform built for how
               India actually rents today, growing a little every week.
             </p>
           </Reveal>
@@ -584,7 +574,7 @@ function WhoItsFor() {
         <Reveal>
           <Eyebrow dark>Who it&apos;s for</Eyebrow>
           <h2 className="mt-6 max-w-3xl font-display text-[clamp(2rem,4.5vw,3.4rem)] font-light leading-[1.05] tracking-[-0.025em] text-paper">
-            A home, for everyone —
+            A home, for everyone
             <br />
             wherever you&apos;re starting from.
           </h2>

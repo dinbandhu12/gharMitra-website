@@ -76,7 +76,7 @@ const reasons = [
   {
     n: "04",
     title: "Local-first",
-    body: "Made for small towns and big cities alike — wherever you live.",
+    body: "Made for small towns and big cities alike wherever you live.",
   },
 ];
 
@@ -141,7 +141,7 @@ const appFeatures = [
   {
     n: "01",
     title: "Verified, visual listings",
-    body: "Real photos and short video walkthroughs on every home — so what you see is exactly what you visit.",
+    body: "Real photos and short video walkthroughs on every home so what you see is exactly what you visit.",
   },
   {
     n: "02",
@@ -156,7 +156,7 @@ const appFeatures = [
   {
     n: "04",
     title: "Local-first",
-    body: "Built for small towns and big cities alike — for wherever you call home.",
+    body: "Built for small towns and big cities alike for wherever you call home.",
   },
 ];
 
@@ -247,15 +247,15 @@ const faqs = [
   },
   {
     q: "Is it really broker-free?",
-    a: "Yes. There's no agent in between — you talk straight to the owner and decide together. No brokerage, no markup, no middlemen.",
+    a: "Yes. There's no agent in between you talk straight to the owner and decide together. No brokerage, no markup, no middlemen.",
   },
   {
     q: "How are listings verified?",
-    a: "Every listing carries real photos and up to three short videos, and owners verify their identity — so what you see on screen is what you find on the visit.",
+    a: "Every listing carries real photos and up to three short videos, and owners verify their identity so what you see on screen is what you find on the visit.",
   },
   {
     q: "Do I have to pay to use it?",
-    a: "Browsing and contacting owners is always free for seekers. Owners pay only when a home is actually rented or sold — no deal, no fee.",
+    a: "Browsing and contacting owners is always free for seekers. Owners pay only when a home is actually rented or sold no deal, no fee.",
   },
   {
     q: "Which areas does gharMitra cover?",
@@ -364,7 +364,7 @@ export function FinalCTA() {
                 Ready to find your next home?
               </h2>
               <p className="mt-7 max-w-md text-lg leading-relaxed text-ink/70">
-                Download gharMitra and start in minutes — list a property or
+                Download gharMitra and start in minutes list a property or
                 find one, with no brokers in between.
               </p>
 
