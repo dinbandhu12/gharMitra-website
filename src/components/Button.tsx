@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
+import { usePageTransition } from "./TransitionProvider";
 
 type Variant = "solid" | "light" | "outlineDark" | "outlineLight" | "dark";
 
@@ -68,6 +70,8 @@ export default function Button({
   onClick,
 }: Props) {
   const v = variants[variant];
+  const { navigate } = usePageTransition();
+  const pathname = usePathname();
   const sizing =
     size === "sm" ? "px-5 py-2.5 text-[11px]" : "px-7 py-3.5 text-[13px]";
 
@@ -101,10 +105,18 @@ export default function Button({
     </span>
   );
 
-  // internal route → Link for client navigation; otherwise plain anchor
+  // internal route → Link, but route full-page navigations through the
+  // page-transition curtain (mirrors Nav.goTo). Hash links (e.g. "/#download")
+  // are left to SmoothScroll; clicking the page you're on does nothing.
   if (href.startsWith("/")) {
+    const handleClick = (e: React.MouseEvent) => {
+      onClick?.(e);
+      if (e.defaultPrevented || href.includes("#")) return;
+      e.preventDefault();
+      if (href !== pathname) navigate(href);
+    };
     return (
-      <Link href={href} onClick={onClick} className="inline-flex">
+      <Link href={href} onClick={handleClick} className="inline-flex">
         {inner}
       </Link>
     );
