@@ -102,7 +102,7 @@ export default function Hero() {
           <div data-fade className="flex flex-wrap items-center gap-3">
             {/* Hero download — direct APK link */}
             <Button
-              href="https://github.com/dinbandhu12/gharMitra-apprelease/releases/download/v1.2.0/gharMitra-v1.2.0.apk"
+              href="https://github.com/dinbandhu12/gharMitra-apprelease/releases/download/v1.2.1/gharMitra-v1.2.1.apk"
               variant="light"
             >
               Download the App
