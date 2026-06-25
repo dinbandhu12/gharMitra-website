@@ -136,7 +136,7 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
         {/* Desktop CTA — direct APK download */}
         <div className="hidden md:block">
           <Button
-            href="https://github.com/dinbandhu12/gharMitra-apprelease/releases/download/v1.2.2/gharMitra-v1.2.2.apk"
+            href="https://github.com/dinbandhu12/gharMitra-apprelease/releases/download/v1.2.3/gharMitra-v1.2.3.apk"
             variant={light ? "light" : "solid"}
             size="sm"
             arrow={false}
@@ -274,7 +274,7 @@ export default function Nav({ overHero = false }: { overHero?: boolean }) {
                 </div>
                 {/* Mobile menu download — direct APK */}
                 <a
-                  href="https://github.com/dinbandhu12/gharMitra-apprelease/releases/download/v1.2.2/gharMitra-v1.2.2.apk"
+                  href="https://github.com/dinbandhu12/gharMitra-apprelease/releases/download/v1.2.3/gharMitra-v1.2.3.apk"
                   onClick={() => setOpen(false)}
                   className="flex w-full items-center justify-center gap-2 rounded-sm bg-accent px-7 py-4 text-[13px] font-medium uppercase tracking-[0.1em] text-white transition-colors duration-300 hover:bg-accent-deep"
                 >
